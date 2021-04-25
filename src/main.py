@@ -1,4 +1,4 @@
-import requests, sys, argparse
+import requests, argparse
 from bs4 import BeautifulSoup
 
 class PageDidntLoad(Exception):
