@@ -15,7 +15,9 @@ class Crypto:
         self.market_cap = market_cap
 
 def FindCryptoInfo(name):
-    url = "https://coinmarketcap.com/currencies/" + name
+    url = "https://coinmarketcap.com/currencies/{0}".format(name
+                                                            .replace(' ','-')
+                                                            .lower())
     page = requests.get(url)
 
     if (page.status_code != 200):
