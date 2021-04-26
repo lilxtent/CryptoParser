@@ -49,7 +49,7 @@ def FindTopNCryptoInfo(n):
 
     for i in range(0, n):
         name = table[i].find(
-            'div', class_="sc-16r8icm-0 sc-1teo54s-1 lgwUsc").get_text()
+            'div', class_="sc-16r8icm-0 sc-1teo54s-1 lgwUsc").p.get_text()
         price = table[i].find('div', class_="price___3rj7O").get_text()
         cap = table[i].find('p', class_="sc-1eb5slv-0 kDEzev").get_text()
         CryptoInf.append(Crypto(name, price, cap))
