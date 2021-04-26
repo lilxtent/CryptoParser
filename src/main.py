@@ -7,7 +7,7 @@ class PageDidntLoad(Exception):
         self.text = text
 
 class Crypto:
-    """Модель криптовалюты"""
+    """Cryptocurrencie model"""
 
     def __init__(self, name, price, market_cap):
         self.name = name
@@ -25,7 +25,7 @@ def FindCryptoInfo(name):
 
     soup = BeautifulSoup(page.text, 'html.parser')
 
-    #В этом div находится вся нужная нам информация
+    #This div contains all information we need
     body = soup.body.find('div', 
                           class_ = 'sc-16r8icm-0 kXPxnI container___lbFzk')
     price = body.find('div', class_ = 'priceValue___11gHJ').get_text()
@@ -68,21 +68,21 @@ args = ArgsParser.parse_args()
 if (args.find != 'null'):
     try:
         crypto = FindCryptoInfo(args.find)
-        print("Имя: {0}\nЦена: {1}\nКапитализация: {2}".format(
+        print("Name: {0}\nPrice: {1}\nCap: {2}".format(
                                                         crypto.name.upper(),
                                                         crypto.price,
                                                         crypto.market_cap))
     except PageDidntLoad as e:
-        print("Проблемы с обращением к серверу (Код ошибки: {0}).\n"
-              "Убедитесь в корректности написания имени криптовалюты."
+        print("Problems accessing the server (Error code: {0}).\n"
+              "Make sure the spelling of the cryptocurrency name is correct."
               .format(e.text))
 
 if (args.top > 10):
-    print("Максимальное количество - 10")
+    print("Maximum amount - 10")
 elif (args.top > 0):
     try:
         result = FindTopNCryptoInfo(args.top)
-        print("Топ {0} криптовалют".format(args.top))
+        print("Top {0} cryptocurrencies:".format(args.top))
         for i in range(0, args.top):
             print("{0})\n  Name: {1}\n  Price: {2}\n  Cap: {3}"
                                                             .format(i + 1,
@@ -91,5 +91,5 @@ elif (args.top > 0):
                                                             result[i].market_cap
                                                             ))
     except PageDidntLoad as e:
-            print("Проблемы с обращением к серверу (Код ошибки: {0}).\n"
+            print("Problems accessing the server (Error code: {0}).\n"
                 .format(e.text))
