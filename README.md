@@ -11,5 +11,3 @@ Crypto parser from https://coinmarketcap.com/
 # Used libs:
 *  Requests: https://github.com/psf/requests
 *  Beautifulsoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-
-e-mail: lilxtent@gmail.com
