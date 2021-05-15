@@ -79,6 +79,8 @@ if (args.find != 'null'):
 
 if (args.top > 10):
     print("Maximum amount - 10")
+elif (args.top < 1):
+    print("Minimum amount - 1")
 elif (args.top > 0):
     try:
         result = FindTopNCryptoInfo(args.top)
