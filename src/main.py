@@ -1,4 +1,4 @@
-import requests, argparse
+import requests, argparse, sys
 from bs4 import BeautifulSoup
 
 class PageDidntLoad(Exception):
@@ -64,6 +64,10 @@ ArgsParser = argparse.ArgumentParser()
 ArgsParser.add_argument("-find", default="null", help="Find crypto info")
 ArgsParser.add_argument("-top", default=0, type=int, help="Shows top n cryptos")
 args = ArgsParser.parse_args()
+
+if not len(sys.argv) > 1:
+    print("No arguments were passed.\nUse --help for help.")
+    raise SystemExit
 
 if (args.find != 'null'):
     try:
