@@ -56,21 +56,7 @@ def FindTopNCryptoInfo(n):
 
     return CryptoInf
 
-################################################################################
-################################################################################
-################################################################################
-
-ArgsParser = argparse.ArgumentParser()
-ArgsParser.add_argument("-find", default=None, help="Find crypto info")
-ArgsParser.add_argument("-top", default=None,
-                         type=int, help="Shows top n cryptos")
-args = ArgsParser.parse_args()
-
-if not len(sys.argv) > 1:
-    print("No arguments were passed.\nUse --help for help.")
-    raise SystemExit
-
-if (args.find != None):
+def ShowCryptoInfo(name):
     try:
         crypto = FindCryptoInfo(args.find)
         print("Name: {0}\nPrice: {1}\nCap: {2}".format(
@@ -82,22 +68,50 @@ if (args.find != None):
               "Make sure the spelling of the cryptocurrency name is correct."
               .format(e.text))
 
-if (args.top != None):
-    if (args.top > 10):
-        print("Maximum amount - 10")
-    elif (args.top < 1):
-        print("Minimum amount - 1")
-    elif (args.top > 0):
-        try:
-            result = FindTopNCryptoInfo(args.top)
-            print("Top {0} cryptocurrencies:".format(args.top))
-            for i in range(0, args.top):
-                print("{0})\n  Name: {1}\n  Price: {2}\n  Cap: {3}"
+def ShowTopNCryptoInfo(n):
+    try:
+        result = FindTopNCryptoInfo(args.top)
+        print("Top {0} cryptocurrencies:".format(args.top))
+        for i in range(0, args.top):
+            print("{0})\n  Name: {1}\n  Price: {2}\n  Cap: {3}"
                                                             .format(i + 1,
                                                             result[i].name,
                                                             result[i].price,
                                                             result[i].market_cap
                                                             ))
-        except PageDidntLoad as e:
-                print("Problems accessing the server (Error code: {0}).\n"
-                    .format(e.text))
+    except PageDidntLoad as e:
+        print("Problems accessing the server (Error code: {0}).\n"
+                                                                .format(e.text))
+
+def GetArgumetns():
+    ArgsParser = argparse.ArgumentParser()
+    ArgsParser.add_argument("-find", default=None, help="Find crypto info")
+    ArgsParser.add_argument("-top", default=None,
+                            type=int, help="Shows top n cryptos")
+    
+    return ArgsParser.parse_args()
+
+def IsAnyArgumentsPassed():
+    return len(sys.argv) > 1
+
+################################################################################
+################################################################################
+################################################################################
+"""                              MAIN                                        """
+
+args = GetArgumetns()
+
+if not IsAnyArgumentsPassed():
+    print("No arguments were passed.\nUse --help for help.")
+    raise SystemExit
+
+if (args.find is not None):
+    ShowCryptoInfo(args.find)
+
+if (args.top is not None):
+    if (args.top > 10):
+        print("Maximum amount - 10")
+    elif (args.top < 1):
+        print("Minimum amount - 1")
+    elif (args.top > 0):
+        ShowTopNCryptoInfo(args.top)
