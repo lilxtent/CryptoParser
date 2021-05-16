@@ -61,15 +61,16 @@ def FindTopNCryptoInfo(n):
 ################################################################################
 
 ArgsParser = argparse.ArgumentParser()
-ArgsParser.add_argument("-find", default="null", help="Find crypto info")
-ArgsParser.add_argument("-top", default=0, type=int, help="Shows top n cryptos")
+ArgsParser.add_argument("-find", default=None, help="Find crypto info")
+ArgsParser.add_argument("-top", default=None,
+                         type=int, help="Shows top n cryptos")
 args = ArgsParser.parse_args()
 
 if not len(sys.argv) > 1:
     print("No arguments were passed.\nUse --help for help.")
     raise SystemExit
 
-if (args.find != 'null'):
+if (args.find != None):
     try:
         crypto = FindCryptoInfo(args.find)
         print("Name: {0}\nPrice: {1}\nCap: {2}".format(
@@ -81,21 +82,22 @@ if (args.find != 'null'):
               "Make sure the spelling of the cryptocurrency name is correct."
               .format(e.text))
 
-if (args.top > 10):
-    print("Maximum amount - 10")
-elif (args.top < 1):
-    print("Minimum amount - 1")
-elif (args.top > 0):
-    try:
-        result = FindTopNCryptoInfo(args.top)
-        print("Top {0} cryptocurrencies:".format(args.top))
-        for i in range(0, args.top):
-            print("{0})\n  Name: {1}\n  Price: {2}\n  Cap: {3}"
+if (args.top != None):
+    if (args.top > 10):
+        print("Maximum amount - 10")
+    elif (args.top < 1):
+        print("Minimum amount - 1")
+    elif (args.top > 0):
+        try:
+            result = FindTopNCryptoInfo(args.top)
+            print("Top {0} cryptocurrencies:".format(args.top))
+            for i in range(0, args.top):
+                print("{0})\n  Name: {1}\n  Price: {2}\n  Cap: {3}"
                                                             .format(i + 1,
                                                             result[i].name,
                                                             result[i].price,
                                                             result[i].market_cap
                                                             ))
-    except PageDidntLoad as e:
-            print("Problems accessing the server (Error code: {0}).\n"
-                .format(e.text))
+        except PageDidntLoad as e:
+                print("Problems accessing the server (Error code: {0}).\n"
+                    .format(e.text))
